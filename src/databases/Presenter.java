@@ -5,6 +5,8 @@
  */
 package databases;
 
+import javafx.event.EventHandler;
+
 /**
  *
  * @author rauerjakob
@@ -13,7 +15,17 @@ public class Presenter {
 
     static void start(Fenster aThis) {
          Databases db = new Databases();
-        
+         
+         aThis.getAusgebenArtikel().setOnAction(e -> {
+            
+             db.ausgebenAlleArtikel(aThis.getTextFieldArtNr().getText());
+         });
+         
+         aThis.getAusgebenEingaenge().setOnAction(e -> {
+             db.ausgebenAlleEingaenge();
+         });
+         
+         
     }
     
 }

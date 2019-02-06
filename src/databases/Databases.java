@@ -12,26 +12,63 @@ import java.sql.*;
  */
 public class Databases {
 
+    private Connection conn = null;
+    private Statement stat = null;
+    
     public Databases() {
-        ausgebenAlleArtikel();
+        init();
+        
+        //ausgebenAlleArtikel();
     }
     
-    private void ausgebenAlleArtikel() {
+    private void init() {
         try{
             Class.forName("org.sqlite.JDBC");
-            Connection conn = DriverManager.getConnection("jdbc:sqlite:buero.sqlite");
-            Statement stat = conn.createStatement();
-            String sql = "Select * from artikel";
+            this.conn = DriverManager.getConnection("jdbc:sqlite:buero.sqlite");
+            this.stat = conn.createStatement();
+            
+        } catch(Exception e) {
+            System.out.println(e.toString());
+        }
+       
+    }
+    
+    public void close() {
+        try {
+             this.conn.close();
+             this.stat.close();
+        } catch(Exception e) {
+            System.out.println(e);
+        }
+       
+    }
+    
+    void ausgebenAlleArtikel(String artikelNr) {
+        try{
+            String sql = "Select * from Artikel where ArtikelNr = '" + artikelNr+ "'";
             ResultSet rs = stat.executeQuery(sql);
 
             while(rs.next()) {
                 System.out.println("ArtikelNr: " + rs.getString("ArtikelNr") + ", Bezeichnung: " + rs.getString("Artikelname"));
             }
-            rs.close();
-            conn.close();
             
         } catch(Exception e) {
             System.out.println(e.toString());
         }
     }   
+    
+    public void ausgebenAlleEingaenge() {
+        try {
+            String sql = "Select * from Eingaenge";
+            ResultSet rs = stat.executeQuery(sql);
+
+            System.out.println("Eingangsliste\n"
+                             + "=============");
+            while(rs.next()) {
+                System.out.println("EingangsNr: " + rs.getString("EingangsNr") + ", Eingangsdatum: " + rs.getString("Eingangsdatum"));
+            }
+        } catch(Exception e) {
+            
+        }
+    }
 }

@@ -43,13 +43,49 @@ public class Databases {
        
     }
     
-    void ausgebenAlleArtikel(String artikelNr) {
+    void ausgebenAlleArtikel() {
         try{
-            String sql = "Select * from Artikel where ArtikelNr = '" + artikelNr+ "'";
+            String sql = "Select * from Artikel";
             ResultSet rs = stat.executeQuery(sql);
 
             while(rs.next()) {
                 System.out.println("ArtikelNr: " + rs.getString("ArtikelNr") + ", Bezeichnung: " + rs.getString("Artikelname"));
+            }
+            
+        } catch(Exception e) {
+            System.out.println(e.toString());
+        }
+    }   
+    
+    void ausgebenArtikelNummer(String artikelNr) {
+        try{
+            String sql = "Select ArtikelName, Artikel.ArtikelNr, Ausgaenge.AusgangsNr, Einzelpreis, AnzahlEinheiten, Einzelpreis * AnzahlEinheiten as gesamt from Artikel "
+                    + "JOIN Ausgaenge on Artikel.ArtikelNr = Ausgaenge.ArtikelNr where Artikel.ArtikelNr = '" + artikelNr+ "'";
+            ResultSet rs = stat.executeQuery(sql);
+
+            while(rs.next()) {
+                System.out.println(rs.getString("AusgangsNr") + ": " + "ArtikelNr: " + rs.getString("ArtikelNr") + " Bezeichnung: " + rs.getString("Artikelname") 
+                        + "     Preis: "  + rs.getString("Einzelpreis")
+                        + "     Menge: " + rs.getString("AnzahlEinheiten") 
+                        + "     Gesamtpreis: " +  rs.getString("gesamt"));
+            }
+            
+        } catch(Exception e) {
+            System.out.println(e.toString());
+        }
+    }   
+    
+    void ausgebenArtikelNummerTeil(String artikelNr) {
+        try{
+            String sql = "Select ArtikelName, Artikel.ArtikelNr, Ausgaenge.AusgangsNr, Einzelpreis, AnzahlEinheiten, Einzelpreis * AnzahlEinheiten as gesamt from Artikel "
+                    + "JOIN Ausgaenge on Artikel.ArtikelNr = Ausgaenge.ArtikelNr where Artikel.ArtikelNr = '" + artikelNr+ "'";
+            ResultSet rs = stat.executeQuery(sql);
+
+            while(rs.next()) {
+                System.out.println(rs.getString("AusgangsNr") + ": " + "ArtikelNr: " + rs.getString("ArtikelNr") + " Bezeichnung: " + rs.getString("Artikelname") 
+                        + "     Preis: "  + rs.getString("Einzelpreis")
+                        + "     Menge: " + rs.getString("AnzahlEinheiten") 
+                        + "     Gesamtpreis: " +  rs.getString("gesamt"));
             }
             
         } catch(Exception e) {

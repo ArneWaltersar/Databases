@@ -18,14 +18,26 @@ public class Presenter {
          
          aThis.getAusgebenArtikel().setOnAction(e -> {
             
-             db.ausgebenAlleArtikel(aThis.getTextFieldArtNr().getText());
+             db.ausgebenAlleArtikel();
+         });
+         
+         aThis.getAusgebenNachArtNr().setOnAction(e -> {
+            
+             db.ausgebenArtikelNummer(aThis.getTextFieldArtNr().getText());
          });
          
          aThis.getAusgebenEingaenge().setOnAction(e -> {
              db.ausgebenAlleEingaenge();
          });
          
+         aThis.getAusgebenNachArtNrTeil().setOnAction(e -> {
+             db.ausgebenArtikelNummerTeil(aThis.getTextFieldArtNr().getText());
+         });
          
     }
     
+    static void start2(Fenster2 aThis) {
+         Databases db = new Databases();
+         
+    }
 }
